@@ -1,0 +1,15 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "withNodeModules": true,
+  "printWidth": 140,
+  "vueIndentScriptAndStyle": true,
+  "tabWidth": 4,
+  "useTabs": false,
+  "jsxSingleQuote": true,
+  "bracketSpacing": true,
+  "embeddedLanguageFormatting": "auto",
+  "arrowParens": "always",
+  "trailingComma": "none",
+  "parser": "babylon"
+}
