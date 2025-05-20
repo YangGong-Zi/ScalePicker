@@ -20,7 +20,7 @@ class anyScale {
     config: AnyScaleOptions = {
         el: null,
         start: 0,
-        end: 10,
+        end: 100,
         width: 200,
         height: 120,
         scale: 1,
@@ -43,7 +43,6 @@ class anyScale {
     _moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
 
-        this.createCanvas()
         this.createScale()
         this.createMidCursor()
         // this.$_drawSign()
@@ -55,7 +54,7 @@ class anyScale {
             throw new Error('scale函数的第二个参数，必须为正确的回调函数！')
         }
     }
-    slowActionFn = function(t: number, b: number, c: number, d: number) {
+    slowActionFn = function (t: number, b: number, c: number, d: number) {
         // return -c * ((t = t/d - 1) * t * t*t - 1) + b;
         return c * ((t = t / d - 1) * t * t + 1) + b
     }
@@ -89,6 +88,7 @@ class anyScale {
         this.config.el?.appendChild(this.canvasDom)
         this.ctx = this.canvasDom?.getContext('2d')
         this.ctx?.scale(this.dpr, this.dpr)
+        this.current_def = Math.floor(((this.config.end - this.config.start) / 2 + this.config.start) / this.config.capacity) * this.config.capacity
     }
 
     createScale() {
@@ -97,7 +97,7 @@ class anyScale {
         canvas_bg.width = this.config.width * this.dpr
         canvas_bg.height = this.config.height * this.dpr
         ctx_bg.scale(this.dpr, this.dpr)
-        let begin_num = this.config.currentValue - (this.config.width / 2) * (this.config.capacity / this.config.unit)
+        let begin_num = this.current_def - (this.config.width / 2) * (this.config.capacity / this.config.unit)
         let cur_x = 0
         let cur_num: number = 0
         const scale_len = Math.ceil((this.config.width + 1) / this.config.unit) // 刻度条数
@@ -205,7 +205,7 @@ class anyScale {
             if (ifMove) {
                 const move_x = current_x - last_x
                 this.current_def = this.current_def - move_x * (this.config.capacity / this.config.unit)
-                window.requestAnimationFrame(this._moveDraw.bind(this))
+                window.requestAnimationFrame(this._moveDraw)
                 // moveDraw();
 
                 last_x = current_x

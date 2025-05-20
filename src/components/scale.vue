@@ -10,7 +10,7 @@
             el: document.querySelector('#scale'),
             scale: 2,
             start: 0,
-            end: 50,
+            end: 100,
             width: 200,
             height: 120,
             unit: 10, // 刻度间隔 'px'
