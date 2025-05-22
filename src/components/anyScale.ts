@@ -33,15 +33,16 @@ class anyScale {
         midLineColor: '',
         openUnitChange: false
     }
-    canvasDom: null | HTMLCanvasElement = null
+    canvasDom:  HTMLCanvasElement = null as unknown as HTMLCanvasElement
     current_def = 0
     dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
-    ctx: null | CanvasRenderingContext2D = null
-    _callBack = () => {
+    ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
+    _callBack = (val:number) =>
+        console.log(val)
 
-    }
     _moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
+        console.log(this.current_def,'current_def');
 
         this.createScale()
         this.createMidCursor()
@@ -86,7 +87,7 @@ class anyScale {
         this.canvasDom.width = this.dpr * this.config?.width // 确保canvas宽高为整数
         this.canvasDom.height = this.dpr * this.config?.height
         this.config.el?.appendChild(this.canvasDom)
-        this.ctx = this.canvasDom?.getContext('2d')
+        this.ctx = this.canvasDom.getContext('2d')!
         this.ctx?.scale(this.dpr, this.dpr)
         this.current_def = Math.floor(((this.config.end - this.config.start) / 2 + this.config.start) / this.config.capacity) * this.config.capacity
     }
@@ -103,7 +104,7 @@ class anyScale {
         const scale_len = Math.ceil((this.config.width + 1) / this.config.unit) // 刻度条数
         const real_len = Math.ceil((this.config.end - this.config.start + 1) / this.config.capacity) // 实际可绘制的刻度条数
 
-        ctx_bg.fillStyle = this.config?.background || 'transparent' // 背景色
+        ctx_bg.fillStyle = this.config?.background ?? 'transparent' // 背景色
         ctx_bg.fillRect(0, 0, this.config.width, this.config.height)
         ctx_bg.closePath()
         // 底线
@@ -126,8 +127,8 @@ class anyScale {
             }
             ctx_bg.beginPath()
             ctx_bg.strokeStyle = this.config.scaleLineColor || '#1675DE'
-            ctx_bg.font = this.config.fontSize
-            ctx_bg.fillStyle = this.config.fontColor
+            ctx_bg.font = String(this.config.fontSize ?? 14)
+            ctx_bg.fillStyle = this.config.fontColor ?? '#333'
             ctx_bg.textAlign = 'center'
             ctx_bg.shadowBlur = 0
             cur_x = space_x + i * this.config.unit
@@ -137,17 +138,23 @@ class anyScale {
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#4AC979'
                 ctx_bg.shadowColor = '#9e9e9e'
                 ctx_bg.shadowBlur = 1
-                ctx_bg.fillText(String(cur_num), cur_x, 100)
+                ctx_bg.font = '14px Helvetica, Tahoma, Arial'
+                // ctx_bg.fillText(String(cur_num), cur_x, 100)
             } else if (cur_num % (this.config.capacity * 5) === 0) {
-                ctx_bg.moveTo(cur_x, (this.config.height * 2) / 3)
+                ctx_bg.moveTo(cur_x, (this.config.height * 1) / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#FF131B'
                 if (real_len <= 10) {
                     ctx_bg.font = '14px Helvetica, Tahoma, Arial'
-                    ctx_bg.fillText(String(cur_num), cur_x, 100)
+                    // ctx_bg.fillText(String(cur_num), cur_x, 100)
                 }
             } else {
                 // ctx_bg.moveTo(cur_x, (this.config.height * 4) / 5)
                 ctx_bg.moveTo(cur_x, this.config.height / 4)
+            }
+            if (Math.round(this.current_def) === cur_num) {
+                ctx_bg.fillStyle = '#1675DE'
+                ctx_bg.font = '28px Helvetica, Tahoma, Arial'
+                ctx_bg.fillText(String(cur_num), cur_x, 100)
             }
             ctx_bg.lineTo(cur_x, 0)
             ctx_bg.stroke()
