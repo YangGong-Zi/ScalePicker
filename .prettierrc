@@ -10,6 +10,5 @@
   "bracketSpacing": true,
   "embeddedLanguageFormatting": "auto",
   "arrowParens": "always",
-  "trailingComma": "none",
-  "parser": "babylon"
+  "trailingComma": "none"
 }

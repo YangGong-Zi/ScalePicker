@@ -1,19 +1,19 @@
 interface AnyScaleOptions {
-    el: HTMLElement | null;  // 必须元素节点
-    width: number;
-    height: number,
-    scale?: number;
-    currentValue: number,// 可选数字类型（默认值在类内部实现）
-    unit: number, // 刻度间隔 'px'
-    capacity: number, // 刻度容量值
-    start: number,
-    end: number,
-    fontSize: number,
-    fontColor?: string,
-    background?: string,
-    scaleLineColor?: string,
-    midLineColor?: string,
-    openUnitChange?: boolean,
+    el: HTMLElement | null // 必须元素节点
+    width: number
+    height: number
+    scale?: number
+    currentValue: number // 可选数字类型（默认值在类内部实现）
+    unit: number // 刻度间隔 'px'
+    capacity: number // 刻度容量值
+    start: number
+    end: number
+    fontSize: number
+    fontColor?: string
+    background?: string
+    scaleLineColor?: string
+    midLineColor?: string
+    openUnitChange?: boolean
 }
 
 class anyScale {
@@ -33,16 +33,15 @@ class anyScale {
         midLineColor: '',
         openUnitChange: false
     }
-    canvasDom:  HTMLCanvasElement = null as unknown as HTMLCanvasElement
+    canvasDom: HTMLCanvasElement = null as unknown as HTMLCanvasElement
     current_def = 0
     dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
     ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
-    _callBack = (val:number) =>
-        console.log(val)
+    _callBack = (val: number) => console.log(val)
 
     _moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
-        console.log(this.current_def,'current_def');
+        console.log(this.current_def, 'current_def')
 
         this.createScale()
         this.createMidCursor()
@@ -89,7 +88,8 @@ class anyScale {
         this.config.el?.appendChild(this.canvasDom)
         this.ctx = this.canvasDom.getContext('2d')!
         this.ctx?.scale(this.dpr, this.dpr)
-        this.current_def = Math.floor(((this.config.end - this.config.start) / 2 + this.config.start) / this.config.capacity) * this.config.capacity
+        this.current_def =
+            Math.floor(((this.config.end - this.config.start) / 2 + this.config.start) / this.config.capacity) * this.config.capacity
     }
 
     createScale() {
@@ -98,7 +98,7 @@ class anyScale {
         canvas_bg.width = this.config.width * this.dpr
         canvas_bg.height = this.config.height * this.dpr
         ctx_bg.scale(this.dpr, this.dpr)
-        let begin_num = this.current_def - (this.config.width / 2) * (this.config.capacity / this.config.unit)
+        const begin_num = this.current_def - (this.config.width / 2) * (this.config.capacity / this.config.unit)
         let cur_x = 0
         let cur_num: number = 0
         const scale_len = Math.ceil((this.config.width + 1) / this.config.unit) // 刻度条数
@@ -115,8 +115,8 @@ class anyScale {
         ctx_bg.lineWidth = 1
         ctx_bg.stroke()
         ctx_bg.closePath()
-        let space_num = Math.ceil(begin_num / this.config.capacity) * this.config.capacity - begin_num
-        let space_x = space_num * (this.config.unit / this.config.capacity)
+        const space_num = Math.ceil(begin_num / this.config.capacity) * this.config.capacity - begin_num
+        const space_x = space_num * (this.config.unit / this.config.capacity)
         // 绘制刻度线
         for (let i = 0; i < scale_len; i++) {
             cur_num = (Math.ceil(begin_num / this.config.capacity) + i) * this.config.capacity
@@ -160,7 +160,17 @@ class anyScale {
             ctx_bg.stroke()
             ctx_bg.closePath()
         }
-        this.ctx.drawImage(canvas_bg, 0, 0, this.config.width * this.dpr, this.config.height * this.dpr, 0, 0, this.config.width, this.config.height)
+        this.ctx.drawImage(
+            canvas_bg,
+            0,
+            0,
+            this.config.width * this.dpr,
+            this.config.height * this.dpr,
+            0,
+            0,
+            this.config.width,
+            this.config.height
+        )
     }
 
     createMidCursor() {
@@ -250,8 +260,8 @@ class anyScale {
 
             ifMove = false
 
-            let t = 0,
-                d = 15
+            let t = 0
+            const d = 15
             if (Math.abs(v) >= 0.3) {
                 from_def = this.current_def
                 step()
@@ -275,10 +285,7 @@ class anyScale {
         this.canvasDom.addEventListener(startEvent, start)
         this.canvasDom.addEventListener(moveEvent, move)
         this.canvasDom.addEventListener(endEvent, end)
-
     }
-
-
 }
 
 export default anyScale
