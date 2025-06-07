@@ -1,37 +1,37 @@
 interface AnyScaleOptions {
-    el: HTMLElement | null // 必须元素节点
-    width: number
-    height: number
-    scale?: number
+    el: HTMLElement | null // 目标元素节点
+    width: number //  宽度
+    height: number // 高度
+    scale?: number // 缩放比例
     currentValue: number // 可选数字类型（默认值在类内部实现）
     unit: number // 刻度间隔 'px'
     capacity: number // 刻度容量值
-    start: number
-    end: number
-    fontSize: number
-    fontColor?: string
-    background?: string
-    scaleLineColor?: string
-    midLineColor?: string
-    openUnitChange?: boolean
+    start: number // 坐标开始数值
+    end: number // 坐标结束数值
+    fontSize: number // 字体大小
+    fontColor?: string // 字体颜色
+    background?: string // 背景颜色
+    scaleLineColor?: string // 刻度线颜色
+    midLineColor?: string // 中间线颜色
+    openUnitChange?: boolean //  是否开启刻度间隔改变
 }
 
 class anyScale {
     config: AnyScaleOptions = {
-        el: null,
-        start: 0,
-        end: 100,
-        width: 200,
-        height: 120,
-        scale: 1,
+        el: null, // 目标元素节点
+        start: 0, // 坐标开始数值
+        end: 100, // 坐标结束数值
+        width: 200, // 宽度
+        height: 120, // 高度
+        scale: 1, // 缩放比例
         unit: 10, // 刻度间隔 'px'
         capacity: 1, // 刻度容量值
-        currentValue: 0,
-        fontSize: 14,
-        fontColor: '#333',
-        background: '',
-        midLineColor: '',
-        openUnitChange: false
+        currentValue: 0, // 当前值
+        fontSize: 14, //  字体大小
+        fontColor: '#333', // 字体颜色
+        background: '', // 背景色
+        midLineColor: '', // 中间游标颜色
+        openUnitChange: false // 是否开启单位切换
     }
     canvasDom: HTMLCanvasElement = null as unknown as HTMLCanvasElement
     current_def = 0
@@ -65,7 +65,7 @@ class anyScale {
     }
 
     init() {
-        console.log(this.config)
+        console.log(this.config, 'config')
         this.createCanvas()
         this.createScale()
         this.createMidCursor()
@@ -139,13 +139,13 @@ class anyScale {
                 ctx_bg.shadowColor = '#9e9e9e'
                 ctx_bg.shadowBlur = 1
                 ctx_bg.font = '14px Helvetica, Tahoma, Arial'
-                // ctx_bg.fillText(String(cur_num), cur_x, 100)
+                ctx_bg.fillText(String(cur_num), cur_x, 75)
             } else if (cur_num % (this.config.capacity * 5) === 0) {
                 ctx_bg.moveTo(cur_x, (this.config.height * 1) / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#FF131B'
                 if (real_len <= 10) {
                     ctx_bg.font = '14px Helvetica, Tahoma, Arial'
-                    // ctx_bg.fillText(String(cur_num), cur_x, 100)
+                    ctx_bg.fillText(String(cur_num), cur_x, 75)
                 }
             } else {
                 // ctx_bg.moveTo(cur_x, (this.config.height * 4) / 5)
@@ -153,7 +153,7 @@ class anyScale {
             }
             if (Math.round(this.current_def) === cur_num) {
                 ctx_bg.fillStyle = '#1675DE'
-                ctx_bg.font = '28px Helvetica, Tahoma, Arial'
+                ctx_bg.font = '24px Helvetica, Tahoma, Arial'
                 ctx_bg.fillText(String(cur_num), cur_x, 100)
             }
             ctx_bg.lineTo(cur_x, 0)
@@ -195,7 +195,7 @@ class anyScale {
     }
 
     addEvent() {
-        let begin_x = 0 // 手指x坐标
+        // let begin_x = 0 // 手指x坐标
         let last_x = 0 //上一次x坐标
         let ifMove = false // 是否开始交互
         let from_def = 0
@@ -207,9 +207,11 @@ class anyScale {
             e.preventDefault()
             ifMove = true
             if (!e.touches) {
-                last_x = begin_x = e.pageX
+                last_x = e.pageX
+                // begin_x = e.pageX
             } else {
-                last_x = begin_x = e.touches[0].pageX
+                last_x = e.touches[0].pageX
+                // begin_x = e.touches[0].pageX
             }
             lastMove_x = last_x
             lastMoveTime = e.timeStamp || Date.now()
