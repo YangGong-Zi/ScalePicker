@@ -59,8 +59,8 @@ class anyScale {
         return c * ((t = t / d - 1) * t * t + 1) + b
     }
 
-    constructor(conf: AnyScaleOptions) {
-        this.config = conf
+    constructor(config: AnyScaleOptions) {
+        this.config = config
         this.init()
     }
 
@@ -132,7 +132,6 @@ class anyScale {
             ctx_bg.textAlign = 'center'
             ctx_bg.shadowBlur = 0
             cur_x = space_x + i * this.config.unit
-
             if (cur_num % (this.config.capacity * 10) === 0) {
                 ctx_bg.moveTo(cur_x, (this.config.height * 1) / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#4AC979'
@@ -199,7 +198,6 @@ class anyScale {
         let last_x = 0 //上一次x坐标
         let ifMove = false // 是否开始交互
         let from_def = 0
-
         let lastMoveTime = 0
         let lastMove_x = 0
         const start = (e: any) => {
