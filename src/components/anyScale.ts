@@ -264,6 +264,9 @@ class anyScale {
             e.stopPropagation()
             e.preventDefault()
             const current_x = e.touches ? e.touches[0].pageX : e.pageX
+            if (this.current_def < this.config.start || this.current_def > this.config.end) {
+                ifMove = false
+            }
             if (ifMove) {
                 const move_x = current_x - last_x
                 this.current_def = this.current_def - move_x * (this.config.capacity / this.config.unit)
