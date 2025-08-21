@@ -82,7 +82,9 @@ class anyScale {
     current_def = 0
     dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
     ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
-    _callBack = (val: number) => console.log(val)
+    _callBack = (val: number) => {
+        console.log(val)
+    }
 
     _moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
@@ -178,14 +180,14 @@ class anyScale {
             ctx_bg.shadowBlur = 0
             cur_x = space_x + i * this.config.unit
             if (cur_num % (this.config.capacity * 10) === 0) {
-                ctx_bg.moveTo(cur_x, (this.config.height * 1) / 2)
+                ctx_bg.moveTo(cur_x, this.config.height / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#4AC979'
                 ctx_bg.shadowColor = '#9e9e9e'
                 ctx_bg.shadowBlur = 1
                 ctx_bg.font = '14px Helvetica, Tahoma, Arial'
                 ctx_bg.fillText(String(cur_num), cur_x, 75)
             } else if (cur_num % (this.config.capacity * 5) === 0) {
-                ctx_bg.moveTo(cur_x, (this.config.height * 1) / 2)
+                ctx_bg.moveTo(cur_x, this.config.height / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#FF131B'
                 if (real_len <= 10) {
                     ctx_bg.font = '14px Helvetica, Tahoma, Arial'
@@ -220,21 +222,21 @@ class anyScale {
     createMidCursor() {
         const mid_x = Math.floor(this.config.width / 2)
         this.ctx.beginPath()
-        this.ctx.fillStyle = this.config?.midLineColor || '#087af7'
-        this.ctx.fillRect(mid_x - 1, 0, 2, this.config.height)
+        this.ctx.fillStyle = this.config?.midLineColor || '#e5c17c'
+        // this.ctx.fillRect(mid_x - 1, 0, 2, this.config.height)
         this.ctx.stroke()
-        this.ctx.moveTo(mid_x, 8)
+        this.ctx.moveTo(mid_x, 10)
         this.ctx.lineTo(mid_x - 5, 2)
         this.ctx.lineTo(mid_x - 5, 0)
         this.ctx.lineTo(mid_x + 5, 0)
         this.ctx.lineTo(mid_x + 5, 2)
         this.ctx.fill()
-        this.ctx.moveTo(mid_x, this.config.height - 8)
-        this.ctx.lineTo(mid_x - 5, this.config.height - 2)
-        this.ctx.lineTo(mid_x - 5, this.config.height)
-        this.ctx.lineTo(mid_x + 5, this.config.height)
-        this.ctx.lineTo(mid_x + 5, this.config.height - 2)
-        this.ctx.fill()
+        // this.ctx.moveTo(mid_x, this.config.height - 8)
+        // this.ctx.lineTo(mid_x - 5, this.config.height - 2)
+        // this.ctx.lineTo(mid_x - 5, this.config.height)
+        // this.ctx.lineTo(mid_x + 5, this.config.height)
+        // this.ctx.lineTo(mid_x + 5, this.config.height - 2)
+        // this.ctx.fill()
         this.ctx.closePath()
     }
 
@@ -287,7 +289,8 @@ class anyScale {
             const nowTime = e.timeStamp || Date.now()
             const v = -(current_x - lastMove_x) / (nowTime - lastMoveTime) // 手指划动速度
             const step = () => {
-                this.current_def = this.slowActionFn(t, from_def, this.config.capacity * v * 50, d)
+                // this.current_def = this.slowActionFn(t, from_def, this.config.capacity * v * 50, d)
+                console.log(this.current_def, 'slowActionFn current')
                 if (this.current_def < this.config.start) {
                     this.current_def = this.config.start
                 } else if (this.current_def > this.config.end) {
