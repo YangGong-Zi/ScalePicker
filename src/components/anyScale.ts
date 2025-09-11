@@ -88,21 +88,27 @@ class anyScale {
 
     _moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
-        console.log(this.current_def, 'current_def')
+        // console.log(this.current_def, 'current_def')
 
         this.createScale()
         this.createMidCursor()
-        // this.$_drawSign()
-
         if (typeof this._callBack === 'function') {
-            // console.log(value);
             this._callBack(Math.round(this.current_def))
         } else {
-            throw new Error('scale函数的第二个参数，必须为正确的回调函数！')
+            throw new Error(
+                'The second parameter of the scale function must be a correct callback function!'
+            )
         }
     }
+    /**
+     *@description 缓动函数
+     * @param t 时间
+     * @param b 起始值
+     * @param c 变化量
+     * @param d 持续时间
+     * @returns
+     */
     slowActionFn = function (t: number, b: number, c: number, d: number) {
-        // return -c * ((t = t/d - 1) * t * t*t - 1) + b;
         return c * ((t = t / d - 1) * t * t + 1) + b
     }
 
@@ -136,7 +142,10 @@ class anyScale {
         this.ctx = this.canvasDom.getContext('2d')!
         this.ctx?.scale(this.dpr, this.dpr)
         this.current_def =
-            Math.floor(((this.config.end - this.config.start) / 2 + this.config.start) / this.config.capacity) * this.config.capacity
+            Math.floor(
+                ((this.config.end - this.config.start) / 2 + this.config.start) /
+                    this.config.capacity
+            ) * this.config.capacity
     }
 
     createScale() {
@@ -145,7 +154,8 @@ class anyScale {
         canvas_bg.width = this.config.width * this.dpr
         canvas_bg.height = this.config.height * this.dpr
         ctx_bg.scale(this.dpr, this.dpr)
-        const begin_num = this.current_def - (this.config.width / 2) * (this.config.capacity / this.config.unit)
+        const begin_num =
+            this.current_def - (this.config.width / 2) * (this.config.capacity / this.config.unit)
         let cur_x = 0
         let cur_num: number = 0
         const scale_len = Math.ceil((this.config.width + 1) / this.config.unit) // 刻度条数
@@ -162,7 +172,8 @@ class anyScale {
         ctx_bg.lineWidth = 1
         ctx_bg.stroke()
         ctx_bg.closePath()
-        const space_num = Math.ceil(begin_num / this.config.capacity) * this.config.capacity - begin_num
+        const space_num =
+            Math.ceil(begin_num / this.config.capacity) * this.config.capacity - begin_num
         const space_x = space_num * (this.config.unit / this.config.capacity)
         // 绘制刻度线
         for (let i = 0; i < scale_len; i++) {
@@ -179,29 +190,36 @@ class anyScale {
             ctx_bg.textAlign = 'center'
             ctx_bg.shadowBlur = 0
             cur_x = space_x + i * this.config.unit
-            if (cur_num % (this.config.capacity * 10) === 0) {
+            const showCurrentValue = () => {
+                if (Math.round(this.current_def) === cur_num) {
+                    ctx_bg.fillStyle = '#1675DE'
+                    ctx_bg.font = '18px Helvetica, Tahoma, Arial'
+                    ctx_bg.fillText(String(cur_num), cur_x, 75)
+                }
+            }
+            if (cur_num % (this.config.capacity * 10) === 0 || cur_num === this.config.start) {
                 ctx_bg.moveTo(cur_x, this.config.height / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#4AC979'
                 ctx_bg.shadowColor = '#9e9e9e'
                 ctx_bg.shadowBlur = 1
                 ctx_bg.font = '14px Helvetica, Tahoma, Arial'
-                ctx_bg.fillText(String(cur_num), cur_x, 75)
+                Math.round(this.current_def) === cur_num
+                    ? showCurrentValue()
+                    : ctx_bg.fillText(String(cur_num), cur_x, 75)
             } else if (cur_num % (this.config.capacity * 5) === 0) {
                 ctx_bg.moveTo(cur_x, this.config.height / 2)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#FF131B'
                 if (real_len <= 10) {
                     ctx_bg.font = '14px Helvetica, Tahoma, Arial'
-                    ctx_bg.fillText(String(cur_num), cur_x, 75)
+                    Math.round(this.current_def) === cur_num
+                        ? showCurrentValue()
+                        : ctx_bg.fillText(String(cur_num), cur_x, 75)
                 }
             } else {
                 // ctx_bg.moveTo(cur_x, (this.config.height * 4) / 5)
                 ctx_bg.moveTo(cur_x, this.config.height / 4)
             }
-            if (Math.round(this.current_def) === cur_num) {
-                ctx_bg.fillStyle = '#1675DE'
-                ctx_bg.font = '24px Helvetica, Tahoma, Arial'
-                ctx_bg.fillText(String(cur_num), cur_x, 100)
-            }
+            // showCurrentValue()
             ctx_bg.lineTo(cur_x, 0)
             ctx_bg.stroke()
             ctx_bg.closePath()
@@ -223,7 +241,6 @@ class anyScale {
         const mid_x = Math.floor(this.config.width / 2)
         this.ctx.beginPath()
         this.ctx.fillStyle = this.config?.midLineColor || '#e5c17c'
-        // this.ctx.fillRect(mid_x - 1, 0, 2, this.config.height)
         this.ctx.stroke()
         this.ctx.moveTo(mid_x, 10)
         this.ctx.lineTo(mid_x - 5, 2)
@@ -231,12 +248,6 @@ class anyScale {
         this.ctx.lineTo(mid_x + 5, 0)
         this.ctx.lineTo(mid_x + 5, 2)
         this.ctx.fill()
-        // this.ctx.moveTo(mid_x, this.config.height - 8)
-        // this.ctx.lineTo(mid_x - 5, this.config.height - 2)
-        // this.ctx.lineTo(mid_x - 5, this.config.height)
-        // this.ctx.lineTo(mid_x + 5, this.config.height)
-        // this.ctx.lineTo(mid_x + 5, this.config.height - 2)
-        // this.ctx.fill()
         this.ctx.closePath()
     }
 
@@ -271,10 +282,9 @@ class anyScale {
             }
             if (ifMove) {
                 const move_x = current_x - last_x
-                this.current_def = this.current_def - move_x * (this.config.capacity / this.config.unit)
+                this.current_def =
+                    this.current_def - move_x * (this.config.capacity / this.config.unit)
                 window.requestAnimationFrame(this._moveDraw)
-                // moveDraw();
-
                 last_x = current_x
                 const nowTime = e.timeStamp || Date.now()
                 if (nowTime - lastMoveTime > 300) {
@@ -289,15 +299,15 @@ class anyScale {
             const nowTime = e.timeStamp || Date.now()
             const v = -(current_x - lastMove_x) / (nowTime - lastMoveTime) // 手指划动速度
             const step = () => {
-                // this.current_def = this.slowActionFn(t, from_def, this.config.capacity * v * 50, d)
-                console.log(this.current_def, 'slowActionFn current')
+                this.current_def = this.slowActionFn(t, from_def, this.config.capacity * v * 50, d)
                 if (this.current_def < this.config.start) {
                     this.current_def = this.config.start
                 } else if (this.current_def > this.config.end) {
                     this.current_def = this.config.end
                 }
                 if (this.config.openUnitChange) {
-                    this.current_def = Math.round(this.current_def / this.config.capacity) * this.config.capacity
+                    this.current_def =
+                        Math.round(this.current_def / this.config.capacity) * this.config.capacity
                 }
                 this._moveDraw()
                 t++
@@ -323,7 +333,8 @@ class anyScale {
                     this.current_def = this.config.end
                 }
                 if (this.config.openUnitChange) {
-                    this.current_def = Math.round(this.current_def / this.config.capacity) * this.config.capacity
+                    this.current_def =
+                        Math.round(this.current_def / this.config.capacity) * this.config.capacity
                 }
                 this._moveDraw()
             }
