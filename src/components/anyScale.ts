@@ -59,6 +59,10 @@ interface AnyScaleOptions {
        @description 是否开启刻度间隔改变
      */
     openUnitChange?: boolean //  是否开启刻度间隔改变
+    /*
+       @description 值变化回调函数
+     */
+    onChange?: (value: number) => void // 值变化时的回调函数
 }
 
 class anyScale {
@@ -82,31 +86,25 @@ class anyScale {
     current_def = 0
     dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
     ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
-    _callBack = (val: number) => {
-        console.log(val)
+    _callBack: (val: number) => void = (val: number) => {
+        // console.log(val)
     }
 
     _moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
-        // console.log(this.current_def, 'current_def')
-
         this.createScale()
         this.createMidCursor()
         if (typeof this._callBack === 'function') {
             this._callBack(Math.round(this.current_def))
-        } else {
-            throw new Error(
-                'The second parameter of the scale function must be a correct callback function!'
-            )
         }
     }
+
     /**
-     *@description 缓动函数
+     * @description 缓动函数
      * @param t 时间
      * @param b 起始值
      * @param c 变化量
      * @param d 持续时间
-     * @returns
      */
     slowActionFn = function (t: number, b: number, c: number, d: number) {
         return c * ((t = t / d - 1) * t * t + 1) + b
@@ -114,11 +112,20 @@ class anyScale {
 
     constructor(config: AnyScaleOptions) {
         this.config = config
+        // 如果配置中传入了回调函数，则使用传入的回调函数
+        try {
+            if (config.onChange && typeof config.onChange === 'function') {
+                this._callBack = config.onChange
+            } else {
+                throw new Error('onChange is not a function')
+            }
+        } catch (error) {
+            console.log(error)
+        }
         this.init()
     }
 
     init() {
-        console.log(this.config, 'config')
         this.createCanvas()
         this.createScale()
         this.createMidCursor()
@@ -127,13 +134,11 @@ class anyScale {
 
     createCanvas() {
         this.canvasDom = document.createElement('canvas')
-        // this.canvasDom.style.width = this.config.el?.clientWidth + 'px'
-        // this.canvasDom.style.height = this.config.height + 'px'
-        console.log(this.config.el?.getBoundingClientRect())
+        // console.log(this.config.el?.getBoundingClientRect())
         const DOMRect = this.config?.el?.getBoundingClientRect()
         this.config.width = Math.floor(Number(DOMRect?.width))
         this.config.height = Math.floor(Number(this.config.height))
-        console.log(DOMRect?.width, this.dpr)
+        // console.log(DOMRect?.width, this.dpr)
         this.canvasDom.style.width = `${this.config.width}px`
         this.canvasDom.style.height = `${this.config.height}px`
         this.canvasDom.width = this.dpr * this.config?.width // 确保canvas宽高为整数

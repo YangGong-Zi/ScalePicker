@@ -5,6 +5,11 @@
 import { onMounted } from 'vue'
 import anyScale from './anyScale'
 
+// 定义回调函数
+const handleScaleChange = (value: number) => {
+    console.log('刻度值变化:', value)
+}
+
 onMounted(() => {
     new anyScale({
         el: document.querySelector('#scale'),
@@ -17,7 +22,8 @@ onMounted(() => {
         capacity: 1, // 刻度容量值
         currentValue: 0,
         fontSize: 12,
-        fontColor: '#333'
+        fontColor: '#333',
+        onChange: handleScaleChange // 传入回调函数
     })
 })
 </script>
