@@ -1,70 +1,3 @@
-interface AnyScaleOptions {
-    /*
-      @description 目标元素节点
-     */
-    el: HTMLElement | null
-    /*
-      @description 宽度
-    */
-    width: number //  宽度
-    /*
-      @description 高度
-    */
-    height: number // 高度
-    /*
-      @description 缩放比例
-    */
-    scale?: number // 缩放比例
-    /*
-      @description 可选数字类型（默认值在类内部实现）
-    */
-    currentValue: number // 可选数字类型（默认值在类内部实现）
-    /*
-      @description 刻度间隔
-     */
-    unit: number // 刻度间隔 'px'
-    /*
-       @description 刻度容量值
-    */
-    capacity: number // 刻度容量值
-    /*
-       @description 坐标开始数值
-    */
-    start: number // 坐标开始数值
-    /*
-       @description 坐标结束数值
-    */
-    end: number // 坐标结束数值
-    /*
-       @description 字体大小
-    */
-    fontSize: number // 字体大小
-    /*
-       @description 字体颜色
-    */
-    fontColor?: string // 字体颜色
-    /*
-       @description 背景颜色
-     */
-    background?: string // 背景颜色
-    /*
-       @description 刻度线颜色
-     */
-    scaleLineColor?: string // 刻度线颜色
-    /*
-       @description 中间线颜色
-     */
-    midLineColor?: string // 中间线颜色
-    /*
-       @description 是否开启刻度间隔改变
-     */
-    openUnitChange?: boolean //  是否开启刻度间隔改变
-    /*
-       @description 值变化回调函数
-     */
-    onChange?: (value: number) => void // 值变化时的回调函数
-}
-
 class anyScale {
     config: AnyScaleOptions = {
         el: null, // 目标元素节点
@@ -86,16 +19,16 @@ class anyScale {
     current_def = 0
     dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
     ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
-    _callBack: (val: number) => void = (val: number) => {
+    callBack: (val: number) => void = (_val: number) => {
         // console.log(val)
     }
 
-    _moveDraw = () => {
+    moveDraw = () => {
         this.ctx.clearRect(0, 0, this.config.width, this.config.height)
         this.createScale()
         this.createMidCursor()
-        if (typeof this._callBack === 'function') {
-            this._callBack(Math.round(this.current_def))
+        if (typeof this.callBack === 'function') {
+            this.callBack(Math.round(this.current_def))
         }
     }
 
@@ -115,7 +48,7 @@ class anyScale {
         // 如果配置中传入了回调函数，则使用传入的回调函数
         try {
             if (config.onChange && typeof config.onChange === 'function') {
-                this._callBack = config.onChange
+                this.callBack = config.onChange
             } else {
                 throw new Error('onChange is not a function')
             }
@@ -289,7 +222,7 @@ class anyScale {
                 const move_x = current_x - last_x
                 this.current_def =
                     this.current_def - move_x * (this.config.capacity / this.config.unit)
-                window.requestAnimationFrame(this._moveDraw)
+                window.requestAnimationFrame(this.moveDraw)
                 last_x = current_x
                 const nowTime = e.timeStamp || Date.now()
                 if (nowTime - lastMoveTime > 300) {
@@ -314,7 +247,7 @@ class anyScale {
                     this.current_def =
                         Math.round(this.current_def / this.config.capacity) * this.config.capacity
                 }
-                this._moveDraw()
+                this.moveDraw()
                 t++
                 if (t <= d) {
                     // 继续运动
@@ -341,7 +274,7 @@ class anyScale {
                     this.current_def =
                         Math.round(this.current_def / this.config.capacity) * this.config.capacity
                 }
-                this._moveDraw()
+                this.moveDraw()
             }
         }
         // 注册事件，移动端和PC端

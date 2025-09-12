@@ -1,29 +1,60 @@
 {
-  "name": "scale",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.5.13"
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^8.32.0",
-    "@typescript-eslint/parser": "^8.32.0",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.26.0",
-    "eslint-plugin-vue": "^10.1.0",
-    "globals": "^16.1.0",
-    "prettier": "3.5.3",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.32.0",
-    "unocss": "^66.1.1",
-    "vite": "^6.3.5",
-    "vue-tsc": "^2.2.8"
-  }
+    "name": "@scale-picker/core",
+    "version": "1.0.0",
+    "description": "A powerful scale picker component built with TypeScript and Canvas",
+    "main": "dist/scale-picker.umd.js",
+    "module": "dist/scale-picker.es.js",
+    "types": "packages/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/scale-picker.es.js",
+            "require": "./dist/scale-picker.umd.js",
+            "types": "./packages/index.d.ts"
+        }
+    },
+    "files": [
+        "dist",
+      "packages/index.d.ts",
+        "README.md"
+    ],
+    "keywords": [
+        "scale",
+        "picker",
+        "canvas",
+        "typescript",
+        "component",
+        "ui"
+    ],
+    "author": "Your Name",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/scale-picker.git"
+    },
+    "type": "module",
+    "scripts": {
+        "dev": "vite --host",
+        "build": "vue-tsc -b && vite build",
+        "preview": "vite preview",
+        "prepublishOnly": "npm run build:lib"
+    },
+    "peerDependencies": {},
+    "dependencies": {
+        "vue": "^3.5.13"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^8.32.0",
+        "@typescript-eslint/parser": "^8.32.0",
+        "@vitejs/plugin-vue": "^5.2.3",
+        "@vue/tsconfig": "^0.7.0",
+        "eslint": "^9.26.0",
+        "eslint-plugin-vue": "^10.1.0",
+        "globals": "^16.1.0",
+        "prettier": "3.5.3",
+        "typescript": "~5.8.3",
+        "typescript-eslint": "^8.32.0",
+        "unocss": "^66.1.1",
+        "vite": "^6.3.5",
+        "vue-tsc": "^2.2.8"
+    }
 }
