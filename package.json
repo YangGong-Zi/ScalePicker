@@ -39,11 +39,11 @@
         "preview": "vite preview",
         "prepublishOnly": "npm run build:lib"
     },
-    "peerDependencies": {},
     "dependencies": {
         "vue": "^3.5.13"
     },
     "devDependencies": {
+        "@types/node": "^24.3.3",
         "@typescript-eslint/eslint-plugin": "^8.32.0",
         "@typescript-eslint/parser": "^8.32.0",
         "@vitejs/plugin-vue": "^5.2.3",
