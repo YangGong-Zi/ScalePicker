@@ -3,7 +3,7 @@
 -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import anyScale from '../../packages/ScalePicker.ts'
+import ScalePicker from '../../packages/ScalePicker.ts'
 
 // 定义回调函数
 const handleScaleChange = (value: number) => {
@@ -11,7 +11,7 @@ const handleScaleChange = (value: number) => {
 }
 
 onMounted(() => {
-    new anyScale({
+    new ScalePicker({
         el: document.querySelector('#scale'),
         scale: 2,
         start: 0,

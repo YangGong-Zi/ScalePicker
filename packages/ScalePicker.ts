@@ -1,5 +1,5 @@
-class anyScale {
-    config: AnyScaleOptions = {
+class ScalePicker {
+    config: ScalePickerOptions = {
         el: null, // 目标元素节点
         start: 0, // 坐标开始数值
         end: 100, // 坐标结束数值
@@ -43,7 +43,7 @@ class anyScale {
         return c * ((t = t / d - 1) * t * t + 1) + b
     }
 
-    constructor(config: AnyScaleOptions) {
+    constructor(config: ScalePickerOptions) {
         this.config = config
         // 如果配置中传入了回调函数，则使用传入的回调函数
         try {
@@ -288,4 +288,4 @@ class anyScale {
     }
 }
 
-export default anyScale
+export default ScalePicker
