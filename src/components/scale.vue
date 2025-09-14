@@ -3,7 +3,7 @@
 -->
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import ScalePicker from '../../packages/ScalePicker.ts'
+import ScalePicker from 'scale-picker'
 
 // 定义回调函数
 const handleScaleChange = (value: number) => {

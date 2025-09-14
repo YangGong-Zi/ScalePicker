@@ -14,7 +14,7 @@
 ## 安装
 
 ```bash
-npm install @scale-picker/core
+npm install scale-picker
 ```
 
 ## 使用方法
@@ -22,7 +22,7 @@ npm install @scale-picker/core
 ### 基础用法
 
 ```javascript
-import ScalePicker from '@scale-picker/core'
+import ScalePicker from 'scale-picker'
 
 const scalePicker = new ScalePicker({
     el: document.querySelector('#scale-container'),
@@ -49,34 +49,34 @@ const scalePicker = new ScalePicker({
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import ScalePicker from '@scale-picker/core'
+    import { onMounted } from 'vue'
+    import ScalePicker from '@scale-picker/core'
 
-onMounted(() => {
-    new ScalePicker({
-        el: document.querySelector('#scale'),
-        width: 300,
-        height: 120,
-        start: 0,
-        end: 100,
-        unit: 10,
-        capacity: 1,
-        currentValue: 25,
-        fontSize: 12,
-        fontColor: '#333',
-        onChange: value => {
-            console.log('刻度值变化:', value)
-        }
+    onMounted(() => {
+        new ScalePicker({
+            el: document.querySelector('#scale'),
+            width: 300,
+            height: 120,
+            start: 0,
+            end: 100,
+            unit: 10,
+            capacity: 1,
+            currentValue: 25,
+            fontSize: 12,
+            fontColor: '#333',
+            onChange: value => {
+                console.log('刻度值变化:', value)
+            }
+        })
     })
-})
 </script>
 
 <style scoped>
-.scale-container {
-    width: 300px;
-    height: 120px;
-    background: #fff;
-}
+    .scale-container {
+        width: 300px;
+        height: 120px;
+        background: #fff;
+    }
 </style>
 ```
 

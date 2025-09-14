@@ -4,12 +4,7 @@ module.exports = {
         es2021: true,
         node: true
     },
-    extends: [
-        'eslint:recommended',
-        '@vue/eslint-config-typescript',
-        'plugin:vue/vue3-recommended',
-        'plugin:@typescript-eslint/recommended'
-    ],
+    extends: ['eslint:recommended'],
     overrides: [
         {
             env: {
