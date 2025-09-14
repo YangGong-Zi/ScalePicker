@@ -1,63 +1,63 @@
 {
-  "name": "scale-picker",
-  "version": "1.0.5",
-  "description": "A powerful scale picker component built with TypeScript and Canvas",
-  "main": "dist/scale-picker.umd.js",
-  "module": "dist/scale-picker.es.js",
-  "types": "dist/scale-picker.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/scale-picker.d.ts",
-      "import": "./dist/scale-picker.es.js",
-      "require": "./dist/scale-picker.umd.js"
+    "name": "scale-picker",
+    "version": "1.0.9",
+    "description": "A powerful scale picker component built with TypeScript and Canvas",
+    "main": "dist/ScalePicker.es.js",
+    "module": "dist/ScalePicker.umd.js",
+    "types": "dist/ScalePicker.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/ScalePicker.d.ts",
+            "import": "./dist/ScalePicker.es.js",
+            "require": "./dist/ScalePicker.umd.js"
+        }
+    },
+    "files": [
+        "package.json",
+        "README.md",
+        "dist"
+    ],
+    "keywords": [
+        "scale",
+        "picker",
+        "canvas",
+        "typescript",
+        "component",
+        "ui"
+    ],
+    "author": "YangGong-Zi",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/YangGong-Zi/ScalePicker.git"
+    },
+    "type": "module",
+    "scripts": {
+        "dev": "vite --host",
+        "build": "vue-tsc -b && vite build",
+        "build:lib": "vue-tsc -b && vite build",
+        "preview": "vite preview",
+        "prepublishOnly": "npm run build:lib"
+    },
+    "dependencies": {
+        "scale-picker": "^1.0.9",
+        "vue": "^3.5.13"
+    },
+    "devDependencies": {
+        "@types/node": "^24.3.3",
+        "@typescript-eslint/eslint-plugin": "^8.32.0",
+        "@typescript-eslint/parser": "^8.32.0",
+        "@vitejs/plugin-vue": "^5.2.3",
+        "@vue/tsconfig": "^0.7.0",
+        "eslint": "^9.26.0",
+        "eslint-plugin-vue": "7.0.0-beta.4",
+        "globals": "^16.1.0",
+        "prettier": "3.5.3",
+        "typescript": "~5.8.3",
+        "typescript-eslint": "^8.32.0",
+        "unocss": "^66.1.1",
+        "vite": "^6.3.5",
+        "vite-plugin-dts": "^4.5.4",
+        "vue-tsc": "^2.2.8"
     }
-  },
-  "files": [
-    "package.json",
-    "README.md",
-    "dist"
-  ],
-  "keywords": [
-    "scale",
-    "picker",
-    "canvas",
-    "typescript",
-    "component",
-    "ui"
-  ],
-  "author": "Your Name",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yourusername/scale-picker.git"
-  },
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vue-tsc -b && vite build",
-    "build:lib": "vue-tsc -b && vite build",
-    "preview": "vite preview",
-    "prepublishOnly": "npm run build:lib"
-  },
-  "dependencies": {
-    "scale-picker": "^1.0.5",
-    "vue": "^3.5.13"
-  },
-  "devDependencies": {
-    "@types/node": "^24.3.3",
-    "@typescript-eslint/eslint-plugin": "^8.32.0",
-    "@typescript-eslint/parser": "^8.32.0",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "@vue/tsconfig": "^0.7.0",
-    "eslint": "^9.26.0",
-    "eslint-plugin-vue": "7.0.0-beta.4",
-    "globals": "^16.1.0",
-    "prettier": "3.5.3",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.32.0",
-    "unocss": "^66.1.1",
-    "vite": "^6.3.5",
-    "vite-plugin-dts": "^4.5.4",
-    "vue-tsc": "^2.2.8"
-  }
 }

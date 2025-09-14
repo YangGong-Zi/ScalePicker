@@ -354,4 +354,8 @@ class ScalePicker {
     }
 }
 
+// 导出类型
+export type { ScalePickerOptions }
+
+// 导出类
 export default ScalePicker

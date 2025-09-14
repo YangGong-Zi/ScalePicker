@@ -5,15 +5,40 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [vue(), UnoCSS(), dts()],
+    plugins: [
+        vue(),
+        UnoCSS(),
+        dts({
+            // 包含额外的类型声明文件
+            include: ['packages/**/*.ts', 'packages/**/*.d.ts'],
+            // 指定输出目录
+            outDir: 'dist',
+            // 控制生成的文件名
+            entryRoot: 'packages',
+            // 可以自定义转换逻辑
+            beforeWriteFile: (filePath, content) => {
+                // 确保主入口文件生成正确的声明文件
+                if (filePath.includes('index.d.ts')) {
+                    return {
+                        filePath: path.join('dist', 'ScalePicker.d.ts'),
+                        content
+                    }
+                }
+                return {
+                    filePath,
+                    content
+                }
+            }
+        })
+    ],
     server: {
         port: 8000
     },
     build: {
         lib: {
-            entry: path.resolve(__dirname, 'packages/ScalePicker.ts'),
+            entry: path.resolve(__dirname, 'packages/index.ts'),
             name: 'ScalePicker', // 为库提供一个全局变量名（在UMD模式中使用）
-            fileName: format => `scale-picker.${format}.js`
+            fileName: format => `ScalePicker.${format}.js`
         },
         minify: false,
         rollupOptions: {
