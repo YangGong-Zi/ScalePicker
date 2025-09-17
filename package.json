@@ -1,6 +1,6 @@
 {
     "name": "scale-picker",
-    "version": "1.0.9",
+    "version": "1.1.0",
     "description": "A powerful scale picker component built with TypeScript and Canvas",
     "main": "dist/ScalePicker.es.js",
     "module": "dist/ScalePicker.umd.js",
