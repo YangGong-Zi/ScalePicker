@@ -40,7 +40,7 @@ module.exports = {
         // 基础规则
         semi: ['error', 'never'],
         quotes: ['error', 'single'],
-        indent: ['error', 2],
+        indent: ['error', 4],
         'comma-dangle': ['error', 'never'],
         'no-console': 'warn',
         'no-debugger': 'error',

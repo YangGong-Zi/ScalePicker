@@ -50,7 +50,7 @@ const scalePicker = new ScalePicker({
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import ScalePicker from '@scale-picker/core'
+import ScalePicker from 'scale-picker'
 
 onMounted(() => {
     new ScalePicker({

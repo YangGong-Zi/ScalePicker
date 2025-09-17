@@ -3,6 +3,7 @@ import path from 'node:path'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import vitePluginBundleObfuscator from 'vite-plugin-bundle-obfuscator'
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [
@@ -29,6 +30,19 @@ export default defineConfig({
                     content
                 }
             }
+        }),
+        vitePluginBundleObfuscator({
+            options: {
+                // 混淆配置选项
+                compact: true,
+                controlFlowFlattening: true,
+                controlFlowFlatteningThreshold: 0.75,
+                numbersToExpressions: true,
+                simplify: true,
+                stringArrayShuffle: true,
+                splitStrings: true,
+                stringArrayThreshold: 0.75
+            }
         })
     ],
     server: {
@@ -40,7 +54,6 @@ export default defineConfig({
             name: 'ScalePicker', // 为库提供一个全局变量名（在UMD模式中使用）
             fileName: format => `ScalePicker.${format}.js`
         },
-        minify: false,
         rollupOptions: {
             // 确保外部化处理那些你不想打包进库的依赖
             external: [],
