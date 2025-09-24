@@ -6,7 +6,7 @@
 
 下面是 ScalePicker 的演示效果：
 
-![Demo演示](src/assets/demo.gif)
+<img src="src/assets/demo.gif" alt="Demo演示" width="80%" style="display: block; margin: 0 auto; border: 1px solid #ddd; border-radius: 4px;">
 
 ## 特性
 
