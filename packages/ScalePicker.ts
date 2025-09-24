@@ -65,7 +65,7 @@ interface ScalePickerOptions {
     onChange?: (value: number) => void // 值变化时的回调函数
 }
 class ScalePicker {
-    config: ScalePickerOptions = {
+    private config: ScalePickerOptions = {
         el: null, // 目标元素节点
         start: 0, // 坐标开始数值
         end: 100, // 坐标结束数值
@@ -79,13 +79,14 @@ class ScalePicker {
         fontColor: '#333', // 字体颜色
         background: '', // 背景色
         midLineColor: '', // 中间游标颜色
-        openUnitChange: false // 是否开启单位切换
+        openUnitChange: false, // 是否开启单位切换
+        onChange: (_value: number) => {}
     }
-    canvasDom: HTMLCanvasElement = null as unknown as HTMLCanvasElement
-    current_def = 0
-    dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
-    ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
-    callBack: (val: number) => void = (_val: number) => {
+    private canvasDom: HTMLCanvasElement = null as unknown as HTMLCanvasElement
+    private current_def = 0
+    private dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
+    private ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
+    private callBack: (val: number) => void = (_val: number) => {
         // console.log(val)
     }
 
@@ -99,11 +100,11 @@ class ScalePicker {
     }
 
     /**
-     * @description 缓动函数
-     * @param t 时间
-     * @param b 起始值
-     * @param c 变化量
-     * @param d 持续时间
+     * @description slow action function
+     * @param t time
+     * @param b start value
+     * @param c change value
+     * @param d duration
      */
     slowActionFn = function (t: number, b: number, c: number, d: number) {
         return c * ((t = t / d - 1) * t * t + 1) + b
@@ -119,7 +120,7 @@ class ScalePicker {
                 throw new Error('onChange is not a function')
             }
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
         this.init()
     }
