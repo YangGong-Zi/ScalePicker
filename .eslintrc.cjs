@@ -27,7 +27,7 @@ module.exports = {
         // Vue 规则
         'vue/multi-word-component-names': 'off',
         'vue/no-setup-props-destructure': 'off',
-        'vue/script-setup-uses-vars': 'error',
+        'vue/script-setup-uses-vars': 'off',
         'vue/component-definition-name-casing': ['error', 'PascalCase'],
         'vue/attribute-hyphenation': ['error', 'always'],
 

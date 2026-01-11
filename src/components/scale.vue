@@ -17,14 +17,15 @@ onMounted(() => {
         scale: 2,
         start: 0,
         end: 100,
-        width: 200,
+        width: 300,
         height: 120,
         unit: 10, // 刻度间隔 'px'
         capacity: 1, // 刻度容量值
         currentValue: 0,
         fontSize: 12,
         fontColor: '#333',
-        onChange: handleScaleChange // 传入回调函数
+        onChange: handleScaleChange, // 传入回调函数
+        direction: 'horizontal'
     })
 })
 </script>
