@@ -148,10 +148,8 @@ class ScalePicker {
     createCanvas() {
         this.canvasDom = document.createElement('canvas')
         // console.log(this.config.el?.getBoundingClientRect())
-        const DOMRect = this.config?.el?.getBoundingClientRect()
-        // this.config.width = Math.floor(Number(DOMRect?.width))
+        // this.config.width = Math.floor(Number(this.config?.el?.getBoundingClientRect()?.width))
         this.config.height = Math.floor(Number(this.config.height))
-        // console.log(DOMRect?.width, this.dpr)
         this.canvasDom.style.width = `${this.config.width}px`
         this.canvasDom.style.height = `${this.config.height}px`
         this.canvasDom.width = this.dpr * this.config?.width // 确保canvas宽高为整数
