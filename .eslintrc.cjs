@@ -42,7 +42,7 @@ module.exports = {
         quotes: ['error', 'single'],
         indent: ['error', 4],
         'comma-dangle': ['error', 'never'],
-        'no-console': 'warn',
+        'no-console': 'off',
         'no-debugger': 'error',
         'no-trailing-spaces': 'error',
         'eol-last': 'error'

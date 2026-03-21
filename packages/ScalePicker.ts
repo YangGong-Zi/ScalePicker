@@ -84,15 +84,15 @@ class ScalePicker {
         background: '', // 背景色
         midLineColor: '', // 中间游标颜色
         openUnitChange: false, // 是否开启单位切换
-        onChange: (_value: number) => {},
+        onChange: () => {},
         direction: 'horizontal' // 显示方向，默认横向
     }
     private canvasDom: HTMLCanvasElement = null as unknown as HTMLCanvasElement
     private current_def = 0
     private dpr: number = window.devicePixelRatio || 1.2 // 获取dpr
     private ctx: CanvasRenderingContext2D = null as unknown as CanvasRenderingContext2D
-    private callBack: (val: number) => void = (_val: number) => {
-        // console.log(val)
+    private readonly callBack: (val: number) => void = (val: number) => {
+        console.log(val)
     }
 
     moveDraw = () => {
@@ -272,8 +272,8 @@ class ScalePicker {
         ctx_bg.fillRect(0, 0, this.config.width, this.config.height)
         ctx_bg.closePath()
         ctx_bg.beginPath()
-        ctx_bg.moveTo(this.config.width / 2, 0)
-        ctx_bg.lineTo(this.config.width / 2, this.config.height)
+        ctx_bg.moveTo(0, 0)
+        ctx_bg.lineTo(0, this.config.height)
         ctx_bg.strokeStyle = '#333'
         ctx_bg.lineWidth = 1
         ctx_bg.stroke()
@@ -292,7 +292,7 @@ class ScalePicker {
             ctx_bg.strokeStyle = this.config.scaleLineColor || '#1675DE'
             ctx_bg.font = String(this.config.fontSize ?? 14)
             ctx_bg.fillStyle = this.config.fontColor ?? '#333'
-            ctx_bg.textAlign = 'right'
+            ctx_bg.textAlign = 'left'
             ctx_bg.textBaseline = 'middle'
             ctx_bg.shadowBlur = 0
             cur_y = space_y + i * this.config.unit
@@ -300,7 +300,7 @@ class ScalePicker {
                 if (Math.round(this.current_def) === cur_num) {
                     ctx_bg.fillStyle = '#1675DE'
                     ctx_bg.font = '18px Helvetica, Tahoma, Arial'
-                    ctx_bg.fillText(String(cur_num), this.config.width / 2 - 15, cur_y)
+                    ctx_bg.fillText(String(cur_num), this.config.width / 2 + 5, cur_y)
                 }
             }
             if (cur_num % (this.config.capacity * 10) === 0 || cur_num === this.config.start) {
@@ -311,7 +311,7 @@ class ScalePicker {
                 ctx_bg.font = '14px Helvetica, Tahoma, Arial'
                 Math.round(this.current_def) === cur_num
                     ? showCurrentValue()
-                    : ctx_bg.fillText(String(cur_num), this.config.width / 2 - 15, cur_y)
+                    : ctx_bg.fillText(String(cur_num), this.config.width / 2 + 5, cur_y)
             } else if (cur_num % (this.config.capacity * 5) === 0) {
                 ctx_bg.moveTo(this.config.width / 2, cur_y)
                 ctx_bg.strokeStyle = this.config?.scaleLineColor || '#FF131B'
@@ -319,12 +319,12 @@ class ScalePicker {
                     ctx_bg.font = '14px Helvetica, Tahoma, Arial'
                     Math.round(this.current_def) === cur_num
                         ? showCurrentValue()
-                        : ctx_bg.fillText(String(cur_num), this.config.width / 2 - 15, cur_y)
+                        : ctx_bg.fillText(String(cur_num), this.config.width / 2 + 5, cur_y)
                 }
             } else {
-                ctx_bg.moveTo((this.config.width * 3) / 4, cur_y)
+                ctx_bg.moveTo(this.config.width / 4, cur_y)
             }
-            ctx_bg.lineTo(this.config.width / 2, cur_y)
+            ctx_bg.lineTo(0, cur_y)
             ctx_bg.stroke()
             ctx_bg.closePath()
         }
